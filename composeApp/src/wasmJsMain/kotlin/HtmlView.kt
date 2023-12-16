@@ -67,13 +67,6 @@ private class FocusSwitcher<T : Element>(
                 .onFocusChanged {
                     if (it.isFocused && !isRequesting) {
                         focusManager.clearFocus(force = true)
-
-                        /*val component = info.container.focusTraversalPolicy.getFirstComponent(info.container)
-                        if (component != null) {
-                            component.requestFocus(FocusEvent.Cause.TRAVERSAL_FORWARD)
-                        } else {
-                            moveForward()
-                        }*/
                     }
                 }
                 .focusTarget()
@@ -84,13 +77,6 @@ private class FocusSwitcher<T : Element>(
                 .onFocusChanged {
                     if (it.isFocused && !isRequesting) {
                         focusManager.clearFocus(force = true)
-
-                        /*val component = info.container.focusTraversalPolicy.getLastComponent(info.container)
-                        if (component != null) {
-                            component.requestFocus(FocusEvent.Cause.TRAVERSAL_BACKWARD)
-                        } else {
-                            moveBackward()
-                        }*/
                     }
                 }
                 .focusTarget()

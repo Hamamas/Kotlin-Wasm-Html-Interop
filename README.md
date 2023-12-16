@@ -53,6 +53,7 @@ the main purpose of the project is make the HTML and COMPOSE WEB interop
             }
         }
 ![image description](screenshots/lazyColumn.png)
+
 **LazyRow**
 
         LazyRow(modifier = Modifier.fillMaxSize()) {

@@ -3,6 +3,9 @@ This is a Kotlin Multiplatform project targeting Web.
 the main purpose of the project is make the HTML and COMPOSE WEB interop
 
 
+[![asciicast](screenshots/animatedVisibility.png)](screenshots/animatedVisibility.mp4)
+
+
 **AnimatedVisibility**
 
         var visibility by remember { mutableStateOf(false) }

@@ -2,10 +2,6 @@ This is a Kotlin Multiplatform project targeting Web.
 
 the main purpose of the project is make the HTML and COMPOSE WEB interop
 
-
-[![asciicast](screenshots/animatedVisibility.png)](screenshots/animatedVisibility.mp4)
-
-
 **AnimatedVisibility**
 
         var visibility by remember { mutableStateOf(false) }
@@ -31,7 +27,8 @@ the main purpose of the project is make the HTML and COMPOSE WEB interop
                 )
             }
         }
-![image description](screenshots/animatedVisibility.png)
+[![Watch the video](screenshots/animatedVisibility.png)](screenshots/animatedVisibility.mp4)
+
 **LazyColumn**
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {

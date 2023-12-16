@@ -1,4 +1,4 @@
-rootProject.name = "KotlinwasmviewInterop"
+rootProject.name = "KotlinWasmHtmlInterop"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

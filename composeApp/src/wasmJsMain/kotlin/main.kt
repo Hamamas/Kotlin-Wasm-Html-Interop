@@ -5,7 +5,7 @@ import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    CanvasBasedWindow(canvasElementId = "ComposeTarget", title = "Kotlin Wasm View Interop") {
+    CanvasBasedWindow(canvasElementId = "ComposeTarget", title = "Kotlin Wasm Html Interop") {
         CompositionLocalProvider(LocalLayerContainer provides document.getElementById("components")!!) {
             App()
         }

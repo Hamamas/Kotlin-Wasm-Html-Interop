@@ -1,5 +1,8 @@
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -13,40 +16,27 @@ import androidx.compose.ui.unit.sp
 import kotlinx.browser.document
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun App() {
     MaterialTheme {
-        var count by remember { mutableIntStateOf(0) }
-        Column {
-            Row {
-
-                HtmlView(
-                    modifier = Modifier.weight(1f).height(100.dp).background(randomColor),
-                    factory = {
-                        document.createElement("h1")
-                    },
-                    update = {
-                        it.textContent = "count is $count"
-                    }
-                )
-
-                Box(modifier = Modifier.weight(1f).height(100.dp).background(randomColor), contentAlignment = Alignment.Center) {
-                    Text(
-                        text = count.toString(),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        fontSize = 24.sp
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(50) {
+                if (it % 2 < 1) {
+                    HtmlView(
+                        modifier = Modifier.size(100.dp).background(randomColor),
+                        factory = {
+                            val element = document.createElement("h3")
+                            element.textContent = "index $it"
+                            element
+                        }
                     )
-                }
-            }
-
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(onClick = { count++ }) {
-                    Text("++")
-                }
-                Button(onClick = { count-- }) {
-                    Text("--")
+                } else {
+                    Box(
+                        modifier = Modifier.size(100.dp).background(randomColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "index $it")
+                    }
                 }
             }
         }

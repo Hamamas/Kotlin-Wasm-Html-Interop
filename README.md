@@ -29,8 +29,6 @@ the main purpose of the project is make the HTML and COMPOSE WEB interop
             }
         }
 ![image description](screenshots/animatedVisibility.png)
-
-
 **LazyColumn**
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -55,4 +53,30 @@ the main purpose of the project is make the HTML and COMPOSE WEB interop
             }
         }
 ![image description](screenshots/lazyColumn.png)
+**LazyRow**
+
+        LazyRow(modifier = Modifier.fillMaxSize()) {
+            items(50) {
+                if (it % 2 < 1) {
+                    HtmlView(
+                        modifier = Modifier.size(100.dp).background(randomColor),
+                        factory = {
+                            val element = document.createElement("h3")
+                            element.textContent = "index $it"
+                            element
+                        }
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier.size(100.dp).background(randomColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "index $it")
+                    }
+                }
+            }
+        }
+![image description](screenshots/lazyRow.png)
+
+
 

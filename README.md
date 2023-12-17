@@ -4,15 +4,31 @@ the main purpose of the project is make the HTML and COMPOSE WEB interop
 
 How to install 
 
-1. Add this to your **[index.html](composeApp/src/wasmJsMain/resources/index.html)**
+1. Add it in your root build.gradle at the end of repositories
+         
+         dependencyResolutionManagement {
+   	        repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+   	        repositories {
+                   mavenCentral()
+                   maven { url 'https://jitpack.io' }
+   	        }
+         }
+
+2. Add the dependency
+
+         dependencies {
+             implementation("com.github.Hamamas:Kotlin-Wasm-Html-Interop:Version")
+         }
+
+3. Add this to your **[index.html](composeApp/src/wasmJsMain/resources/index.html)**
     
     `<div id="components"></div>`
 
-2. Provide the root element in this case is the div we added on the index
+4. Provide the root element in this case is the div we added on the index
 
         CompositionLocalProvider(LocalLayerContainer provides document.getElementById("components")!!)
 
-3. Add Html view 
+5. Add Html view 
 
          HtmlView(
             modifier = Modifier.fillMaxWidth().height(300.dp),

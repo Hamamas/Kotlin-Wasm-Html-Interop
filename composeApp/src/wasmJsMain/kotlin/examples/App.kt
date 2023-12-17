@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import com.hamama.kwhi.HtmlView
 import kotlinx.browser.document
 import kotlinx.browser.window
+import kotlinx.dom.appendElement
+import org.w3c.dom.Attr
 
 
 @Composable
@@ -35,8 +37,15 @@ fun App() {
                 HtmlView(
                     modifier = Modifier.fillMaxWidth().height(300.dp),
                     factory = {
-                        val video = createElement("iframe")
-                        video.setAttribute("src", "https://www.google.com/")
+                        val video = createElement("video")
+                        video.setAttribute("controls","")
+                        video.setAttribute("preload","auto")
+                        video.setAttribute("data-setup","{}")
+                        video.appendElement("source") {
+                            setAttribute("src","http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+                            setAttribute("type","video/mp4")
+                        }
+                        video.className = "video-js"
                         video
                     }
                 )

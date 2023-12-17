@@ -4,6 +4,9 @@ the main purpose of the project is make the HTML and COMPOSE WEB interop
 
 How to install 
 
+[![](https://jitpack.io/v/Hamamas/Kotlin-Wasm-Html-Interop.svg)](https://jitpack.io/#Hamamas/Kotlin-Wasm-Html-Interop)
+
+
 1. Add it in your root build.gradle at the end of repositories
          
          dependencyResolutionManagement {

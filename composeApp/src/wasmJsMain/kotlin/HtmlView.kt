@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.round
 import kotlinx.browser.document
 import kotlinx.dom.appendElement
+import kotlinx.dom.createElement
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
@@ -122,8 +123,9 @@ fun <T : Element> HtmlView(
     }
 
     DisposableEffect(factory) {
-        componentInfo.container = root.appendElement("div", NoOpUpdate)
+        componentInfo.container = document.createElement("div",NoOpUpdate)
         componentInfo.component = factory()
+        root.insertBefore(componentInfo.container,root.firstChild)
         componentInfo.container.append(componentInfo.component)
         componentInfo.updater = Updater(componentInfo.component, update)
         initializingElement(componentInfo.component)

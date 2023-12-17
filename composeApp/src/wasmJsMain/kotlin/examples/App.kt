@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hamama.kwhi.HtmlView
 import kotlinx.browser.document
+import kotlinx.browser.window
 
 
 @Composable
@@ -31,12 +32,10 @@ fun App() {
             }
 
             AnimatedVisibility(visibility) {
-
-
                 HtmlView(
                     modifier = Modifier.fillMaxWidth().height(300.dp),
                     factory = {
-                        val video = document.createElement("iframe")
+                        val video = createElement("iframe")
                         video.setAttribute("src", "https://www.google.com/")
                         video
                     }

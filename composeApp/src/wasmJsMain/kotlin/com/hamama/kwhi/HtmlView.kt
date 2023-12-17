@@ -119,12 +119,17 @@ private fun changeCoordinates(element: Element,width: Float,height: Float,x: Flo
     }
 """)
 
+
+
 @Composable
 fun <T : Element> HtmlView(
-    factory: () -> T,
+    factory: Document.() -> T,
     modifier: Modifier = Modifier,
     update: (T) -> Unit = NoOpUpdate
 ) {
+
+
+
     val componentInfo = remember { ComponentInfo<T>() }
 
     val root = LocalLayerContainer.current
@@ -144,7 +149,7 @@ fun <T : Element> HtmlView(
 
     DisposableEffect(factory) {
         componentInfo.container = document.createElement("div",NoOpUpdate)
-        componentInfo.component = factory()
+        componentInfo.component = document.factory()
         root.insertBefore(componentInfo.container,root.firstChild)
         componentInfo.container.append(componentInfo.component)
         componentInfo.updater = Updater(componentInfo.component, update)

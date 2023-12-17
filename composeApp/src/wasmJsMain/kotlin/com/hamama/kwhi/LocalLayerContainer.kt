@@ -1,3 +1,5 @@
+package com.hamama.kwhi
+
 import androidx.compose.runtime.staticCompositionLocalOf
 import org.w3c.dom.Element
 

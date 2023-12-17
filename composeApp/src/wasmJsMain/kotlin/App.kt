@@ -9,9 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.browser.document
 
+
 @Composable
 fun App() {
     MaterialTheme {
+
+
         var visibility by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -25,10 +28,10 @@ fun App() {
                 HtmlView(
                     modifier = Modifier.fillMaxWidth().height(300.dp),
                     factory = {
-                        val video = document.createElement("video")
+                        val video = document.createElement("iframe")
                         video.setAttribute(
                             "src",
-                            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                            "https://www.google.com/"
                         )
                         video
                     }

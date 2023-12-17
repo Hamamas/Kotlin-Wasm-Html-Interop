@@ -21,9 +21,6 @@ import kotlin.random.Random
 
 val NoOpUpdate: Element.() -> Unit = {}
 
-val randomColor : Color
-    get() = Color(Random.nextLong(0xFFFFFFFF))
-
 private class ComponentInfo<T : Element> {
     lateinit var container: Element
     lateinit var component: T
@@ -84,35 +81,20 @@ private class FocusSwitcher<T : Element>(
     }
 }
 
-external fun onGloballyPositioned(id:String,x: Float, y: Float,width: Float, height: Float)
 
-
-val Document.nonNullBody: HTMLElement
-    get() = document.body ?: error("null body")
-
-var generateId: Int = 0
-    get() {
-        return ++field
-    }
-
-
-private fun initializingElement(id : String) : Unit = js("""
+private fun initializingElement(element: Element) : Unit = js("""
     {
-        var box = document.getElementById(id);
-        box.style.position = 'absolute';
-        box.style.margin = '0px';
+        element.style.position = 'absolute';
+        element.style.margin = '0px';
     }
 """)
 
-
-private fun changeCoordinates(id : String,width: Float,height: Float,x: Float,y: Float) : Unit = js("""
+private fun changeCoordinates(element: Element,width: Float,height: Float,x: Float,y: Float) : Unit = js("""
     {
-        var box = document.getElementById(id);
-        box.style.position = 'absolute';
-        box.style.width = width + 'px';
-        box.style.height = height + 'px';
-        box.style.left = x + 'px';
-        box.style.top = y + 'px';
+        element.style.width = width + 'px';
+        element.style.height = height + 'px';
+        element.style.left = x + 'px';
+        element.style.top = y + 'px';
     }
 """)
 
@@ -133,7 +115,7 @@ fun <T : Element> HtmlView(
         modifier = modifier.onGloballyPositioned { coordinates ->
             val location = coordinates.positionInWindow().round()
             val size = coordinates.size
-            changeCoordinates(componentInfo.component.id,size.width / density, size.height / density, location.x / density,location.y / density)
+            changeCoordinates(componentInfo.component,size.width / density, size.height / density, location.x / density,location.y / density)
         }
     ) {
         focusSwitcher.Content()
@@ -142,10 +124,9 @@ fun <T : Element> HtmlView(
     DisposableEffect(factory) {
         componentInfo.container = root.appendElement("div", NoOpUpdate)
         componentInfo.component = factory()
-        if(componentInfo.component.id.isEmpty()) componentInfo.component.id = generateId.toString()
         componentInfo.container.append(componentInfo.component)
         componentInfo.updater = Updater(componentInfo.component, update)
-        initializingElement(id = componentInfo.component.id)
+        initializingElement(componentInfo.component)
         onDispose {
             root.removeChild(componentInfo.container)
             componentInfo.updater.dispose()
@@ -163,7 +144,7 @@ private class Updater<T : Element>(
     update: (T) -> Unit
 ) {
     private var isDisposed = false
-    private val isUpdateScheduled = false
+
     private val snapshotObserver = SnapshotStateObserver { command ->
         command()
     }
@@ -172,14 +153,6 @@ private class Updater<T : Element>(
         if(isDisposed.not()) {
             performUpdate()
         }
-        /*if (!isUpdateScheduled.getAndSet(true)) {
-            SwingUtilities.invokeLater {
-                isUpdateScheduled.set(false)
-                if (!isDisposed) {
-                    performUpdate()
-                }
-            }
-        }*/
     }
 
     var update: (T) -> Unit = update
@@ -191,8 +164,6 @@ private class Updater<T : Element>(
         }
 
     private fun performUpdate() {
-        // don't replace scheduleUpdate by lambda reference,
-        // scheduleUpdate should always be the same instance
         snapshotObserver.observeReads(component, scheduleUpdate) {
             update(component)
         }
